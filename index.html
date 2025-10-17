@@ -67,5 +67,71 @@
             </ul>
         </nav>
     </footer>
+<!-- Đây là khu vực hiển thị danh sách câu hỏi -->
+<div id="faq-container"></div>
+
+<script>
+// Lấy phần tử HTML nơi sẽ hiển thị danh sách câu hỏi
+const faqContainer = document.getElementById("faq-container");
+
+// Hàm để fetch dữ liệu từ file JSON
+async function fetchQuestions() {
+    const loadingMessage = document.createElement("p");
+    loadingMessage.textContent = "Loading...";
+    faqContainer.appendChild(loadingMessage);
+
+    try {
+        const response = await fetch("questions.json"); // Hoặc faqs.json nếu bạn sử dụng UniFAQ
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const questions = await response.json();
+
+        // Xóa loading message khi dữ liệu đã được tải xong
+        loadingMessage.remove();
+
+        if (questions.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.textContent = "Không có câu hỏi nào để hiển thị.";
+            faqContainer.appendChild(emptyMessage);
+        } else {
+            renderQuestions(questions);
+        }
+    } catch (error) {
+        // Nếu có lỗi khi fetch dữ liệu, hiển thị trạng thái lỗi
+        loadingMessage.remove();
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "Có lỗi xảy ra khi tải dữ liệu.";
+        faqContainer.appendChild(errorMessage);
+    }
+}
+
+// Hàm render danh sách câu hỏi
+function renderQuestions(questions) {
+    questions.forEach(question => {
+        const questionElement = document.createElement("div");
+        questionElement.classList.add("faq-item");
+
+        const questionTitle = document.createElement("h3");
+        questionTitle.textContent = question.question;
+        questionElement.appendChild(questionTitle);
+
+        const questionAnswer = document.createElement("p");
+        questionAnswer.textContent = question.answer;
+        questionElement.appendChild(questionAnswer);
+
+        faqContainer.appendChild(questionElement);
+    });
+}
+
+// Gọi hàm fetchQuestions khi trang được tải
+fetchQuestions();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.js"></script>
+<!-- Thêm file unit tests vào cuối file HTML -->
+<script src="test.js"></script>
+
 </body>
 </html>
