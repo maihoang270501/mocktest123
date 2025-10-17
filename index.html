@@ -17,48 +17,46 @@
                 <li><a href="#test-description" tabindex="1">Mô tả</a></li>
                 <li><a href="#benefits" tabindex="2">Lợi ích</a></li>
                 <li><a href="#how-to-use" tabindex="3">Cách sử dụng</a></li>
-                <li><a href="#cta" tabindex="4">Bắt đầu</a></li>
+                <li><a href="#faq-container" tabindex="4">FAQ</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main>
-        <!-- Test Description Section -->
         <section id="test-description" class="main__description">
             <h2>Mô tả bài kiểm tra</h2>
-            <p>MockTest giúp bạn chuẩn bị tốt cho các kỳ thi với các bài kiểm tra giả lập thực tế. Nó sẽ giúp bạn đánh giá năng lực và cải thiện kỹ năng.</p>
+            <p>MockTest giúp bạn chuẩn bị tốt cho các kỳ thi với các bài kiểm tra mô phỏng thực tế.</p>
         </section>
 
-        <!-- Benefits Section -->
         <section id="benefits" class="main__benefits">
             <h2>Lợi ích khi sử dụng MockTest</h2>
             <ul>
                 <li>Chọn lựa bài kiểm tra phù hợp với nhu cầu học tập</li>
                 <li>Giới thiệu phản hồi chi tiết sau khi hoàn thành bài kiểm tra</li>
-                <li>Thời gian kiểm tra linh hoạt, bạn có thể làm bất cứ lúc nào</li>
-                <li>Giúp bạn làm quen với cấu trúc kỳ thi thực tế</li>
             </ul>
         </section>
 
-        <!-- How to Use Section -->
         <section id="how-to-use" class="main__how-to-use">
             <h2>Cách sử dụng MockTest</h2>
             <ol>
                 <li>Đăng ký tài khoản miễn phí</li>
                 <li>Chọn bài kiểm tra bạn muốn tham gia</li>
-                <li>Thực hiện bài kiểm tra và nhận kết quả ngay lập tức</li>
             </ol>
         </section>
 
-        <!-- Call to Action Section -->
+        <!-- FAQ Section -->
+        <section id="faq-section">
+            <h2>FAQ</h2>
+            <!-- Khu vực hiển thị câu hỏi -->
+            <div id="faq-container"></div>
+        </section>
+
+        <!-- CTA Button -->
         <section id="cta" class="main__cta">
             <a href="#" class="cta__button" tabindex="5">Bắt đầu ngay</a>
         </section>
     </main>
-
-  <div id="faq-container"></div> <!-- Phần tử chứa danh sách câu hỏi -->
-
 
     <!-- Footer -->
     <footer class="footer">
@@ -71,76 +69,69 @@
         </nav>
     </footer>
 
-<script>
-// Lấy phần tử nơi sẽ hiển thị câu hỏi
-const faqContainer = document.getElementById("faq-container");
+    <!-- Jasmine Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/boot.min.js"></script>
+    
+    <!-- Fetch Data and Rendering Logic -->
+    <script>
+    // Lấy phần tử chứa câu hỏi
+    const faqContainer = document.getElementById("faq-container");
 
-// Hàm fetch dữ liệu từ file JSON
-async function fetchQuestions() {
-    // Kiểm tra nếu faqContainer không tồn tại
-    if (!faqContainer) {
-        console.error("Không tìm thấy phần tử faq-container.");
-        return;
+    // Hàm fetch dữ liệu từ file JSON
+    async function fetchQuestions() {
+        const loadingMessage = document.createElement("p");
+        loadingMessage.textContent = "Loading...";
+        faqContainer.appendChild(loadingMessage);
+
+        try {
+            const response = await fetch("questions.json");
+            if (!response.ok) {
+                throw new Error("Lỗi tải dữ liệu: " + response.status);
+            }
+
+            const questions = await response.json();
+            loadingMessage.remove();
+
+            if (questions.length === 0) {
+                const emptyMessage = document.createElement("p");
+                emptyMessage.textContent = "Không có câu hỏi nào để hiển thị.";
+                faqContainer.appendChild(emptyMessage);
+            } else {
+                renderQuestions(questions);
+            }
+        } catch (error) {
+            loadingMessage.remove();
+            const errorMessage = document.createElement("p");
+            errorMessage.textContent = "Có lỗi xảy ra khi tải dữ liệu. Lỗi: " + error.message;
+            faqContainer.appendChild(errorMessage);
+        }
     }
 
-    const loadingMessage = document.createElement("p");
-    loadingMessage.textContent = "Loading...";
-    faqContainer.appendChild(loadingMessage);
+    // Hàm render câu hỏi
+    function renderQuestions(questions) {
+        questions.forEach(question => {
+            const questionElement = document.createElement("div");
+            questionElement.classList.add("faq-item");
 
-    try {
-        const response = await fetch("questions.json"); // Đảm bảo đường dẫn chính xác
-        if (!response.ok) {
-            throw new Error("Lỗi tải dữ liệu: " + response.status);
-        }
+            const questionTitle = document.createElement("h3");
+            questionTitle.textContent = question.question;
+            questionElement.appendChild(questionTitle);
 
-        const questions = await response.json();
-        loadingMessage.remove();
+            const questionAnswer = document.createElement("p");
+            questionAnswer.textContent = question.answer;
+            questionElement.appendChild(questionAnswer);
 
-        // Kiểm tra nếu không có câu hỏi nào
-        if (questions.length === 0) {
-            const emptyMessage = document.createElement("p");
-            emptyMessage.textContent = "Không có câu hỏi nào để hiển thị.";
-            faqContainer.appendChild(emptyMessage);
-        } else {
-            renderQuestions(questions); // Gọi hàm render câu hỏi
-        }
-    } catch (error) {
-        loadingMessage.remove();
-        const errorMessage = document.createElement("p");
-        errorMessage.textContent = "Có lỗi xảy ra khi tải dữ liệu. Lỗi: " + error.message;
-        faqContainer.appendChild(errorMessage);
+            faqContainer.appendChild(questionElement);
+        });
     }
-}
 
-// Hàm render các câu hỏi
-function renderQuestions(questions) {
-    questions.forEach(question => {
-        const questionElement = document.createElement("div");
-        questionElement.classList.add("faq-item");
-
-        const questionTitle = document.createElement("h3");
-        questionTitle.textContent = question.question;
-        questionElement.appendChild(questionTitle);
-
-        const questionAnswer = document.createElement("p");
-        questionAnswer.textContent = question.answer;
-        questionElement.appendChild(questionAnswer);
-
-        faqContainer.appendChild(questionElement);
-    });
-}
-
-// Gọi hàm fetchQuestions khi trang được tải
-fetchQuestions();
-</script>
-
-
-<!-- Thêm Jasmine CDN vào file HTML -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/jasmine-html.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.6.0/boot.min.js"></script>
-<!-- Thêm file unit tests vào cuối file HTML -->
-<script src="test.js"></script>
-
+    // Gọi hàm fetchQuestions khi trang được tải
+    fetchQuestions();
+    </script>
+    
+    <!-- Unit Tests (Jasmine) -->
+    <script src="test.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* styles.css */
+/* Global styles */
 * {
     margin: 0;
     padding: 0;
@@ -39,7 +39,7 @@ header .header__nav ul li a {
 
 /* Focus state cho các phần tử */
 a:focus, .cta__button:focus, button:focus {
-    outline: 3px solid #FFD700; /* Viền vàng cho focus */
+    outline: 3px solid #FFD700;
     outline-offset: 4px;
 }
 
@@ -57,8 +57,17 @@ h2 {
     margin-bottom: 10px;
 }
 
-.main__description, .main__benefits, .main__how-to-use {
+.main__description, .main__benefits, .main__how-to-use, .faq-item {
     margin-bottom: 30px;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+}
+
+.faq-item h3 {
+    font-size: 1.5rem;
+    color: #2a9d8f;
 }
 
 .main__cta .cta__button {
@@ -74,12 +83,10 @@ h2 {
 
 /* Thiết kế đáp ứng cho màn hình nhỏ hơn 768px */
 @media (max-width: 768px) {
-    /* Điều chỉnh lại font-size cho dễ đọc trên màn hình nhỏ */
     body {
         font-size: 14px;
     }
 
-    /* Menu điều hướng dạng dọc thay vì ngang */
     .header__nav ul {
         display: block;
         text-align: center;
@@ -89,13 +96,11 @@ h2 {
         margin: 10px 0;
     }
 
-    /* Nút CTA mở rộng full chiều rộng */
     .cta__button {
         width: 100%;
         padding: 15px;
     }
 
-    /* Đảm bảo các phần tử main không bị quá rộng */
     main {
         padding: 10px;
     }

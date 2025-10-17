@@ -1,0 +1,22 @@
+[
+    {
+        "question": "MockTest là gì?",
+        "answer": "MockTest là một công cụ giúp bạn luyện tập với các bài kiểm tra mô phỏng thực tế, giúp bạn chuẩn bị tốt cho các kỳ thi."
+    },
+    {
+        "question": "Làm thế nào để tham gia MockTest?",
+        "answer": "Bạn cần đăng ký tài khoản và chọn bài kiểm tra bạn muốn tham gia, sau đó bắt đầu làm bài kiểm tra."
+    },
+    {
+        "question": "MockTest có miễn phí không?",
+        "answer": "MockTest cung cấp một số bài kiểm tra miễn phí. Tuy nhiên, nếu bạn muốn truy cập vào tất cả các bài kiểm tra, bạn cần đăng ký tài khoản trả phí."
+    },
+    {
+        "question": "Tôi có thể tham gia MockTest ở đâu?",
+        "answer": "Bạn có thể tham gia MockTest từ bất kỳ đâu miễn là có kết nối Internet. Bạn chỉ cần đăng nhập vào trang web và chọn bài kiểm tra."
+    },
+    {
+        "question": "Kết quả bài kiểm tra có được công nhận không?",
+        "answer": "Kết quả bài kiểm tra trên MockTest không được công nhận chính thức. Tuy nhiên, nó sẽ giúp bạn đánh giá khả năng và chuẩn bị cho kỳ thi thật."
+    }
+]
