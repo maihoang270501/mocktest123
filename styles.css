@@ -1,4 +1,10 @@
 /* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
 }
@@ -10,27 +16,87 @@ header {
     text-align: center;
 }
 
-header nav ul {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
+header .header__logo h1 {
+    font-size: 2.5rem;
 }
 
-header nav ul li {
+header .header__nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+header .header__nav ul li {
     margin: 0 15px;
 }
 
-header nav ul li a {
+header .header__nav ul li a {
     color: white;
     text-decoration: none;
+    font-size: 1.2rem;
+}
+
+/* Focus state cho các phần tử */
+a:focus, .cta__button:focus, button:focus {
+    outline: 3px solid #FFD700; /* Viền vàng cho focus */
+    outline-offset: 4px;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: 3px solid #FFD700;
+    outline-offset: 4px;
 }
 
 main {
     padding: 20px;
 }
 
-footer {
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 10px;
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.main__description, .main__benefits, .main__how-to-use {
+    margin-bottom: 30px;
+}
+
+.main__cta .cta__button {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+/* Thiết kế đáp ứng cho màn hình nhỏ hơn 768px */
+@media (max-width: 768px) {
+    /* Điều chỉnh lại font-size cho dễ đọc trên màn hình nhỏ */
+    body {
+        font-size: 14px;
+    }
+
+    /* Menu điều hướng dạng dọc thay vì ngang */
+    .header__nav ul {
+        display: block;
+        text-align: center;
+    }
+
+    .header__nav ul li {
+        margin: 10px 0;
+    }
+
+    /* Nút CTA mở rộng full chiều rộng */
+    .cta__button {
+        width: 100%;
+        padding: 15px;
+    }
+
+    /* Đảm bảo các phần tử main không bị quá rộng */
+    main {
+        padding: 10px;
+    }
 }
